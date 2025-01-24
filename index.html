@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chemical Combiner</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 {
+            margin-top: 20px;
+        }
+        .inventory {
+            display: flex;
+            flex-wrap: wrap;
+            max-width: 600px;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .item img {
+            width: 50px;
+            height: 50px;
+        }
+        .interface {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .info {
+            margin-top: 10px;
+        }
+        button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Chemical Combiner</h1>
+
+    <div class="inventory" id="inventory"></div>
+
+    <div class="interface">
+        <div>
+            Selected Items: <span id="selected-items">None</span>
+        </div>
+        <div class="info">
+            <p id="info-1"></p>
+            <p id="info-2"></p>
+        </div>
+        <button id="combine-btn" disabled>Combine</button>
+        <p id="result"></p>
+    </div>
+
+    <script>
+        const itemIndex = {
+            "Dirt": "images/dirt.png",
+            "Stone": "images/stone.png",
+            "Stone Wall": "images/stone_wall.png",
+            "Sand": "images/sand.png",
+            "Lava": "images/lava.png",
+            "Obsidian": "images/obsidian.png",
+            "Marble": "images/marble.png",
+            "Water": "images/water.png",
+            "Grass": "images/grass.png",
+            "Mud": "images/mud.png",
+            "Soil": "images/soil.png",
+            "Bush": "images/bush.png",
+            "Tree": "images/tree.png",
+            "Wood Block": "images/wood_block.png",
+            "Rose": "images/rose.png",
+            "Sunflower": "images/sunflower.png",
+            "Cactus": "images/cactus.png",
+            "Bricks": "images/bricks.png",
+            "Well": "images/well.png",
+            "Red Block": "images/red_block.png",
+            "Green Block": "images/green_block.png",
+            "Blue Block": "images/blue_block.png",
+            "Yellow Block": "images/yellow_block.png",
+            "Orange Block": "images/orange_Block.png",
+            "Forge": "images/forge.png",
+        };
+
+        const loadInventory = () => {
+            const savedInventory = localStorage.getItem("inventory");
+            if (savedInventory) {
+                return JSON.parse(savedInventory);
+            }
+            return [
+                { name: "Dirt", image: itemIndex["Dirt"] },
+                { name: "Stone", image: itemIndex["Stone"] },
+                { name: "Sand", image: itemIndex["Sand"] },
+                { name: "Lava", image: itemIndex["Lava"] },
+                { name: "Marble", image: itemIndex["Marble"] },
+                { name: "Water", image: itemIndex["Water"] },
+                { name: "Grass", image: itemIndex["Grass"] }
+            ];
+        };
+
+        let inventory = loadInventory();
+
+        const saveInventory = () => {
+            localStorage.setItem("inventory", JSON.stringify(inventory));
+        };
+
+        const combinations = {
+            "Dirt+Water": "Mud",
+            "Lava+Water": "Obsidian",
+            "Sand+Stone": "Stone Wall",
+            "Grass+Mud": "Bush",
+            "Bush+Dirt": "Tree",
+            "Bush+Lava": "Rose",
+            "Stone+Tree": "Wood Block",
+            "Rose+Sand": "Cactus",
+            "Grass+Rose": "Sunflower",
+            "Stone Wall+Wood Block": "Bricks",
+            "Stone Wall+Water": "Well",
+            "Rose+Wood Block": "Red Block",
+            "Cactus+Wood Block": "Green Block",
+            "Water+Wood Block": "Blue Block",
+            "Sunflower+Wood Block": "Yellow Block",
+            "Red Block+Yellow Block": "Orange Block",
+            "Lava+Well": "Forge",
+        };
+
+        const inventoryDiv = document.getElementById("inventory");
+        const selectedItemsSpan = document.getElementById("selected-items");
+        const info1 = document.getElementById("info-1");
+        const info2 = document.getElementById("info-2");
+        const combineBtn = document.getElementById("combine-btn");
+        const result = document.getElementById("result");
+
+        let selectedItems = [];
+
+        function updateInventory() {
+            inventoryDiv.innerHTML = "";
+            inventory.forEach(item => {
+                const itemDiv = document.createElement("div");
+                itemDiv.className = "item";
+                itemDiv.innerHTML = `<img src="${item.image}" alt="${item.name}"><span>${item.name}</span>`;
+                itemDiv.onclick = () => selectItem(item.name);
+                inventoryDiv.appendChild(itemDiv);
+            });
+            saveInventory();
+        }
+
+        function selectItem(itemName) {
+            if (selectedItems.includes(itemName)) {
+                selectedItems = selectedItems.filter(item => item !== itemName);
+            } else if (selectedItems.length < 2) {
+                selectedItems.push(itemName);
+            }
+
+            selectedItemsSpan.textContent = selectedItems.length ? selectedItems.join(" + ") : "None";
+            updateInfo();
+            combineBtn.disabled = selectedItems.length !== 2;
+        }
+
+        function updateInfo() {
+            if (selectedItems.length === 0) {
+                info1.textContent = "";
+                info2.textContent = "";
+                return;
+            }
+
+            const countCombinations = (itemName) => {
+                const uniqueCombos = new Set(
+                    Object.keys(combinations).map(combo => combo.split("+").sort().join("+"))
+                );
+                return Array.from(uniqueCombos).filter(combo => combo.includes(itemName)).length;
+            };
+
+            info1.textContent = selectedItems[0] ? `${selectedItems[0]} is used in ${countCombinations(selectedItems[0])} combinations.` : "";
+            info2.textContent = selectedItems[1] ? `${selectedItems[1]} is used in ${countCombinations(selectedItems[1])} combinations.` : "";
+        }
+
+        function combineItems() {
+            if (selectedItems.length === 2) {
+                const sortedComboKey = selectedItems.sort().join("+");
+                if (combinations[sortedComboKey]) {
+                    const newItem = combinations[sortedComboKey];
+                    result.textContent = `Success! You created ${newItem}.`;
+
+                    if (!inventory.find(item => item.name === newItem)) {
+                        inventory.push({ name: newItem, image: itemIndex[newItem] });
+                        updateInventory();
+                    }
+                } else {
+                    result.textContent = "Combination failed. Try something else.";
+                }
+                selectedItems = [];
+                selectedItemsSpan.textContent = "None";
+                updateInfo();
+                combineBtn.disabled = true;
+            }
+        }
+
+        combineBtn.onclick = combineItems;
+        updateInventory();
+    </script>
+</body>
+</html>
