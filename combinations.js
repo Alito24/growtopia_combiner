@@ -35,7 +35,7 @@ const combinations = {
     "Death Spikes+Dungeon Door": "Portcullis",
     "Andesite+Portcullis": "Steel Block",
     "Bed+Steel Block": "Bedrock",
-    "Water+White Block": "Clouds",
+    "Water+White Wallpaper": "Clouds",
     "Clouds+Steel Block": "Industrial Fan",
     "Industrial Fan+Wood Block": "Ceiling Fan",
     "Glass Block+White Block": "White Wallpaper",
