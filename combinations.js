@@ -65,7 +65,7 @@ const combinations = {
     "Lattice Background+White Block": "Picket Fence",
     "Lava+Steel Block": "Stove",
     "Picket Fence+Stove": "Spatula",
-    "Mushroom+Stove": "Chef Hat",
+    "Stove+Straw Hat": "Chef Hat",
     "Checker Wallpaper+Stove": "Apron",
     "Black Wallpaper+White Wallpaper": "Checker Wallpaper",
     "Picket Fence+Polka Dot Block": "Traffic Barricade",
