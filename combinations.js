@@ -77,7 +77,7 @@ const combinations = {
     "Clouds+Window": "Glasses",
     "Glasses+Laser Grid": "Cyclopean Visor",
     "Checker Wallpaper+Cyclopean Visor": "Matrix Visor",
-    "Checker Wallpaper+Industrial Fan": "Computer Panel",
+    "Checker Wallpaper+Holographic Sign": "Computer Panel",
     "Computer Panel+Matrix Visor": "Techno Visor",
     "Black Wallpaper+Computer Panel": "Flatscreen TV",
     "Danger Sign+Flatscreen TV": "Military Radio",
