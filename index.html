@@ -16,13 +16,19 @@
         h1 {
             margin-top: 20px;
         }
+        .inventory-container {
+            max-height: 300px;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 80%;
+            margin-top: 20px;
+        }
         .inventory {
             display: flex;
             flex-wrap: wrap;
-            max-width: 600px;
-            justify-content: center;
             gap: 10px;
-            margin-top: 20px;
+            padding: 10px;
         }
         .item {
             display: flex;
@@ -52,12 +58,22 @@
             font-size: 16px;
             cursor: pointer;
         }
+        #search-bar {
+            margin-top: 20px;
+            padding: 10px;
+            width: 80%;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
     </style>
 </head>
 <body>
     <h1>Chemical Combiner</h1>
 
-    <div class="inventory" id="inventory"></div>
+    <input type="text" id="search-bar" placeholder="Search inventory...">
+    <div class="inventory-container">
+        <div class="inventory" id="inventory"></div>
+    </div>
 
     <div class="interface">
         <div>
@@ -71,34 +87,10 @@
         <p id="result"></p>
     </div>
 
+    <script src="index.js"></script>
+    <script src="combinations.js"></script>
+
     <script>
-        const itemIndex = {
-            "Dirt": "images/dirt.png",
-            "Stone": "images/stone.png",
-            "Stone Wall": "images/stone_wall.png",
-            "Sand": "images/sand.png",
-            "Lava": "images/lava.png",
-            "Obsidian": "images/obsidian.png",
-            "Marble": "images/marble.png",
-            "Water": "images/water.png",
-            "Grass": "images/grass.png",
-            "Mud": "images/mud.png",
-            "Soil": "images/soil.png",
-            "Bush": "images/bush.png",
-            "Tree": "images/tree.png",
-            "Wood Block": "images/wood_block.png",
-            "Rose": "images/rose.png",
-            "Sunflower": "images/sunflower.png",
-            "Cactus": "images/cactus.png",
-            "Bricks": "images/bricks.png",
-            "Well": "images/well.png",
-            "Red Block": "images/red_block.png",
-            "Green Block": "images/green_block.png",
-            "Blue Block": "images/blue_block.png",
-            "Yellow Block": "images/yellow_block.png",
-            "Orange Block": "images/orange_block.png",
-            "Forge": "images/forge.png",
-        };
 
         const loadInventory = () => {
             const savedInventory = localStorage.getItem("inventory");
@@ -112,37 +104,28 @@
                 { name: "Lava", image: itemIndex["Lava"] },
                 { name: "Marble", image: itemIndex["Marble"] },
                 { name: "Water", image: itemIndex["Water"] },
-                { name: "Grass", image: itemIndex["Grass"] }
+                { name: "Grass", image: itemIndex["Grass"] },
             ];
         };
 
+        const loadDiscoveredCombinations = () => {
+            const savedCombinations = localStorage.getItem("discoveredCombinations");
+            return savedCombinations ? new Set(JSON.parse(savedCombinations)) : new Set();
+        };
+
+        const saveDiscoveredCombinations = () => {
+            localStorage.setItem("discoveredCombinations", JSON.stringify(Array.from(discoveredCombinations)));
+        };
+
         let inventory = loadInventory();
+        const discoveredCombinations = loadDiscoveredCombinations();
 
         const saveInventory = () => {
             localStorage.setItem("inventory", JSON.stringify(inventory));
         };
 
-        const combinations = {
-            "Dirt+Water": "Mud",
-            "Lava+Water": "Obsidian",
-            "Sand+Stone": "Stone Wall",
-            "Grass+Mud": "Bush",
-            "Bush+Dirt": "Tree",
-            "Bush+Lava": "Rose",
-            "Stone+Tree": "Wood Block",
-            "Rose+Sand": "Cactus",
-            "Grass+Rose": "Sunflower",
-            "Stone Wall+Wood Block": "Bricks",
-            "Stone Wall+Water": "Well",
-            "Rose+Wood Block": "Red Block",
-            "Cactus+Wood Block": "Green Block",
-            "Water+Wood Block": "Blue Block",
-            "Sunflower+Wood Block": "Yellow Block",
-            "Red Block+Yellow Block": "Orange Block",
-            "Lava+Well": "Forge",
-        };
-
         const inventoryDiv = document.getElementById("inventory");
+        const searchBar = document.getElementById("search-bar");
         const selectedItemsSpan = document.getElementById("selected-items");
         const info1 = document.getElementById("info-1");
         const info2 = document.getElementById("info-2");
@@ -151,17 +134,23 @@
 
         let selectedItems = [];
 
-        function updateInventory() {
+        function updateInventory(filter = "") {
             inventoryDiv.innerHTML = "";
-            inventory.forEach(item => {
-                const itemDiv = document.createElement("div");
-                itemDiv.className = "item";
-                itemDiv.innerHTML = `<img src="${item.image}" alt="${item.name}"><span>${item.name}</span>`;
-                itemDiv.onclick = () => selectItem(item.name);
-                inventoryDiv.appendChild(itemDiv);
-            });
+            inventory
+                .filter(item => item.name.toLowerCase().includes(filter.toLowerCase()))
+                .forEach(item => {
+                    const itemDiv = document.createElement("div");
+                    itemDiv.className = "item";
+                    itemDiv.innerHTML = `<img src="${item.image}" alt="${item.name}"><span>${item.name}</span>`;
+                    itemDiv.onclick = () => selectItem(item.name);
+                    inventoryDiv.appendChild(itemDiv);
+                });
             saveInventory();
         }
+
+        searchBar.addEventListener("input", (e) => {
+            updateInventory(e.target.value);
+        });
 
         function selectItem(itemName) {
             if (selectedItems.includes(itemName)) {
@@ -182,15 +171,17 @@
                 return;
             }
 
-            const countCombinations = (itemName) => {
+            const countUndiscoveredCombinations = (itemName) => {
                 const uniqueCombos = new Set(
                     Object.keys(combinations).map(combo => combo.split("+").sort().join("+"))
                 );
-                return Array.from(uniqueCombos).filter(combo => combo.includes(itemName)).length;
+                return Array.from(uniqueCombos).filter(combo =>
+                    combo.includes(itemName) && !discoveredCombinations.has(combo)
+                ).length;
             };
 
-            info1.textContent = selectedItems[0] ? `${selectedItems[0]} is used in ${countCombinations(selectedItems[0])} combinations.` : "";
-            info2.textContent = selectedItems[1] ? `${selectedItems[1]} is used in ${countCombinations(selectedItems[1])} combinations.` : "";
+            info1.textContent = selectedItems[0] ? `${selectedItems[0]} has ${countUndiscoveredCombinations(selectedItems[0])} undiscovered combinations.` : "";
+            info2.textContent = selectedItems[1] ? `${selectedItems[1]} has ${countUndiscoveredCombinations(selectedItems[1])} undiscovered combinations.` : "";
         }
 
         function combineItems() {
@@ -202,8 +193,11 @@
 
                     if (!inventory.find(item => item.name === newItem)) {
                         inventory.push({ name: newItem, image: itemIndex[newItem] });
-                        updateInventory();
+                        updateInventory(searchBar.value);
                     }
+
+                    discoveredCombinations.add(sortedComboKey);
+                    saveDiscoveredCombinations();
                 } else {
                     result.textContent = "Combination failed. Try something else.";
                 }
