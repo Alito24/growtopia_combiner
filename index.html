@@ -139,8 +139,17 @@
             inventory
                 .filter(item => item.name.toLowerCase().includes(filter.toLowerCase()))
                 .forEach(item => {
+                    // Ensure countUndiscoveredCombinations is properly invoked
+                    const uniqueCombos = new Set(
+                        Object.keys(combinations).map(combo => combo.split("+").sort().join("+"))
+                    );
+                    const undiscoveredCount = Array.from(uniqueCombos).filter(combo =>
+                        combo.includes(item.name) && !discoveredCombinations.has(combo)
+                    ).length;
+
                     const itemDiv = document.createElement("div");
                     itemDiv.className = "item";
+                    itemDiv.style.borderWidth = undiscoveredCount === 0 ? "3px" : "1px";
                     itemDiv.innerHTML = `<img src="${item.image}" alt="${item.name}"><span>${item.name}</span>`;
                     itemDiv.onclick = () => selectItem(item.name);
                     inventoryDiv.appendChild(itemDiv);
@@ -193,11 +202,11 @@
 
                     if (!inventory.find(item => item.name === newItem)) {
                         inventory.push({ name: newItem, image: itemIndex[newItem] });
-                        updateInventory(searchBar.value);
                     }
 
                     discoveredCombinations.add(sortedComboKey);
-                    saveDiscoveredCombinations();
+                    saveDiscoveredCombinations(); // Save the discovered combinations
+                    updateInventory(searchBar.value); // Update inventory live
                 } else {
                     result.textContent = "Combination failed. Try something else.";
                 }
