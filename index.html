@@ -139,8 +139,10 @@
             inventory
                 .filter(item => item.name.toLowerCase().includes(filter.toLowerCase()))
                 .forEach(item => {
+                    const undiscoveredCount = countUndiscoveredCombinations(item.name);
                     const itemDiv = document.createElement("div");
                     itemDiv.className = "item";
+                    itemDiv.style.borderWidth = undiscoveredCount === 0 ? "3px" : "1px";
                     itemDiv.innerHTML = `<img src="${item.image}" alt="${item.name}"><span>${item.name}</span>`;
                     itemDiv.onclick = () => selectItem(item.name);
                     inventoryDiv.appendChild(itemDiv);
