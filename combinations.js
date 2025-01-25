@@ -73,7 +73,7 @@ const combinations = {
     "Checker Wallpaper+Street Sign": "Open Sign",
     "Clouds+Open Sign": "Holographic Sign",
     "Lava+Portcullis": "Laser Grid",
-    "Glass Block+White Block": "Window",
+    "Glass Block+White Wallpaper": "Window",
     "Clouds+Window": "Glasses",
     "Glasses+Laser Grid": "Cyclopean Visor",
     "Checker Wallpaper+Cyclopean Visor": "Matrix Visor",
