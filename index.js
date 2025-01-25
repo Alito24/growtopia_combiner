@@ -93,7 +93,7 @@ const itemIndex = {
     "Computer Panel": "images/computer_panel.png",
     "Time-Space Rupture": "images/time-space_rupture.png",
     "Military Radio": "images/military_radio.png",
-    "Desk Chair": "images/desk_chair.png",
+    "Deck Chair": "images/deck_chair.png",
     "Theater Seat": "images/theater_seat.png",
     "Couch": "images/couch.png",
     "Hay Chair": "images/hay_chair.png",
