@@ -86,7 +86,7 @@ const combinations = {
     "Computer Panel+Door": "Time-Space Rupture",
     "Flatscreen TV+Wooden Chair": "Theater Seat",
     "Bed+Flatscreen TV": "Couch",
-    "Couch+Clouds": "Beanbag",
+    "Clouds+Couch": "Beanbag",
     "Sand+Theater Seat": "Deck Chair",
     "Beanbag+Wheat": "Hay Chair",
     "Coral+Stone": "Igneous Rock",
