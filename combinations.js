@@ -61,7 +61,7 @@ const combinations = {
     "Bush+Red Block": "Tomato",
     "Bread+Tomato": "Cheeseburger",
     "Glass Block+Wood Block": "Wooden Background",
-    "Wooden Background+Wood Block": "Lattice Background",
+    "Wood Block+Wooden Background": "Lattice Background",
     "Lattice Background+White Block": "Picket Fence",
     "Lava+Steel Block": "Stove",
     "Picket Fence+Stove": "Spatula",
