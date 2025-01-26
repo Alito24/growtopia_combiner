@@ -91,7 +91,7 @@ const combinations = {
     "Beanbag+Wheat": "Hay Chair",
     "Coral+Stone": "Igneous Rock",
     "Blue Block+Red Block": "Purple Block",
-    "Yellow Block+Purple Block": "Brown Block",
+    "Purple Block+Yellow Block": "Brown Block",
     "Brown Block+Industrial Fan": "Coffee Maker",
     "Flatscreen TV+Time-Space Rupture": "Television",
     "Stove+Television": "Microwave",
