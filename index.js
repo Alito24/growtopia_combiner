@@ -122,5 +122,6 @@ const itemIndex = {
     "Copper Block": "images/copper_block.png",
     "Purple Block": "images/purple_block.png",
     "Brown Block": "images/brown_block.png",
-    "Blue Star Wallpapere": "images/blue_star_wallpaper.png",
+    "Blue Star Wallpaper": "images/blue_star_wallpaper.png",
+    "Television": "images/television.png",
 };
