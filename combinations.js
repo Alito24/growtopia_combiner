@@ -105,7 +105,7 @@ const combinations = {
     "Blue Star Wallpaper+Seagull": "Asteroid",
     "Chicken+White Block": "Egg",
     "Bathtub+Green Block": "Plumbing",
-    "Plumbing+Microwave": "Steam Pipe",
+    "Microwave+Plumbing": "Steam Pipe",
     "Steel Block+Window": "Air Vent",
     "Air Vent+Steam Pipe": "Steam Vent",
     "Air Vent+Industrial Fan": "Air Conditioner",
