@@ -26,7 +26,7 @@ const combinations = {
     "Toilet+Wood Block": "Wooden Chair",
     "Mushroom+Wooden Chair": "Bed",
     "Marble+Stone": "Andesite",
-    "Andesite+Orange Block": "Granite",
+    "Andesite+Stone": "Granite",
     "Well+Wood Block": "Door",
     "Door+Stone Wall": "Dungeon Door",
     "Stone+Wood Block": "Sign",
