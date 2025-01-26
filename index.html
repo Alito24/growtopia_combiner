@@ -147,7 +147,7 @@
                     itemDiv.className = "item";
                     itemDiv.style.borderWidth = undiscoveredCount === 0 ? "3px" : "1px";
                     itemDiv.innerHTML = `
-                        <img src="${item.image}" alt="${item.name}">
+                        <img src="${itemIndex[item.name].image}" alt="${item.name}">
                         <span>${item.name}</span>
                         <small>T${itemIndex[item.name].tier}</small>
                     `;
