@@ -55,7 +55,6 @@ const combinations = {
     "Strawberry Block+White Block": "Polka Dot Block",
     "Grass+Sand": "Wheat",
     "Ceiling Fan+Wheat": "Straw Hat",
-    "White Block+White Wallpaper": "Egg",
     "Egg+Wheat": "Dough",
     "Dough+Stove": "Bread",
     "Bush+Red Block": "Tomato",
