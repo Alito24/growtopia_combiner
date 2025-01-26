@@ -40,8 +40,8 @@
             border-radius: 5px;
         }
         .item img {
-            width: 50px;
-            height: 50px;
+            width: 32px;
+            height: 32px;
         }
         .interface {
             margin-top: 20px;
@@ -139,18 +139,18 @@
             inventory
                 .filter(item => item.name.toLowerCase().includes(filter.toLowerCase()))
                 .forEach(item => {
-                    // Ensure countUndiscoveredCombinations is properly invoked
-                    const uniqueCombos = new Set(
+                    const undiscoveredCount = Array.from(
                         Object.keys(combinations).map(combo => combo.split("+").sort().join("+"))
-                    );
-                    const undiscoveredCount = Array.from(uniqueCombos).filter(combo =>
-                        combo.includes(item.name) && !discoveredCombinations.has(combo)
-                    ).length;
+                    ).filter(combo => combo.includes(item.name) && !discoveredCombinations.has(combo)).length;
 
                     const itemDiv = document.createElement("div");
                     itemDiv.className = "item";
                     itemDiv.style.borderWidth = undiscoveredCount === 0 ? "3px" : "1px";
-                    itemDiv.innerHTML = `<img src="${item.image}" alt="${item.name}"><span>${item.name}</span>`;
+                    itemDiv.innerHTML = `
+                        <img src="${item.image}" alt="${item.name}">
+                        <span>${item.name}</span>
+                        <small>T${itemIndex[item.name].tier}</small>
+                    `;
                     itemDiv.onclick = () => selectItem(item.name);
                     inventoryDiv.appendChild(itemDiv);
                 });
