@@ -65,6 +65,45 @@
             border: 1px solid #ccc;
             border-radius: 5px;
         }
+        .collections-container {
+            max-height: 300px;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 200px;
+            padding: 10px;
+            margin-right: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .collections-container h2 {
+            margin-top: 0;
+            font-size: 18px;
+            text-align: center;
+        }
+
+        .collection {
+            margin-bottom: 15px;
+        }
+
+        .collection-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .collection-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+        }
+
+        .collection-item img {
+            width: 30px;
+            height: 30px;
+        }
+        
     </style>
 </head>
 <body>
@@ -85,6 +124,10 @@
         </div>
         <button id="combine-btn" disabled>Combine</button>
         <p id="result"></p>
+        <div class="collections-container">
+            <h2>Collections</h2>
+            <div id="collections-list"></div>
+        </div>
     </div>
 
     <script src="index.js"></script>
@@ -217,8 +260,50 @@
             }
         }
 
+        function renderCollections() {
+            const collectionsList = document.getElementById("collections-list");
+            collectionsList.innerHTML = "";
+
+            collections.forEach(collection => {
+                const collectionDiv = document.createElement("div");
+                collectionDiv.className = "collection";
+
+                // Collection Name
+                const collectionName = document.createElement("div");
+                collectionName.className = "collection-name";
+                collectionName.textContent = collection.name;
+                collectionDiv.appendChild(collectionName);
+
+                // Collection Items
+                collection.items.forEach(itemName => {
+                    const itemDiv = document.createElement("div");
+                    itemDiv.className = "collection-item";
+
+                    // Item Image
+                    const itemImage = document.createElement("img");
+                    itemImage.src = itemIndex[itemName].image;
+                    itemImage.alt = itemName;
+
+                    // Item Tier
+                    const itemTier = document.createElement("span");
+                    itemTier.textContent = `T${itemIndex[itemName].tier}`;
+
+                    // Append image and tier
+                    itemDiv.appendChild(itemImage);
+                    itemDiv.appendChild(itemTier);
+
+                    collectionDiv.appendChild(itemDiv);
+                });
+
+                collectionsList.appendChild(collectionDiv);
+            });
+        }
+
         combineBtn.onclick = combineItems;
         updateInventory();
+
+        // Call renderCollections during initialization
+        renderCollections();
     </script>
 </body>
 </html>
