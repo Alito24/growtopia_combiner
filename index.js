@@ -123,4 +123,6 @@ const itemIndex = {
     "Brown Block": { image: "images/brown_block.png", tier: 7 },
     "Blue Star Wallpaper": { image: "images/blue_star_wallpaper.png", tier: 7 },
     "Television": { image: "images/television.png", tier: 17 },
+    "ATM Machine": { image: "images/atm_machine.png", tier: 16 },
+    "Vending Machine": { image: "images/vending_machine.png", tier: 17 },
 };
