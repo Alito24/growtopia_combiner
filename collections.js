@@ -5,10 +5,10 @@ const collections = [
     },
     {
         name: "Mini Mountain",
-        items: ["Stone", "Andesite", "Granite", "Obsidian", "Bedrock"],
+        items: ["Stone", "Andesite", "Obsidian", "Granite", "Bedrock"],
     },
     {
         name: "Movie Night",
-        items: ["Theater Seat", "Cheeseburger", "Vending Machine"],
+        items: ["Theater Seat", "Vending Machine", "Cheeseburger"],
     },
 ];
