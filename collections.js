@@ -8,7 +8,7 @@ const collections = [
         items: ["Stone", "Andesite", "Obsidian", "Granite", "Bedrock"],
     },
     {
-        name: "Funtime Carnival" 😄,
+        name: "Funtime Carnival 😄",
         items: ["Carnival Wallpaper", "Carnival Spikeball", "Carnival Pinwheel"],
     },
     {
