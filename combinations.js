@@ -116,5 +116,7 @@ const combinations = {
     "Picket Fence+Portcullis": "Chainlink Fence",
     "Chainlink Fence+Death Spikes": "Barbed Wire",
     "Brown Block+Steel Block": "Copper Block",
+    "Computer Panel+Golden Block": "ATM Machine",
+    "ATM Machine+Well": "Vending Machine",
 
 };
