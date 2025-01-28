@@ -7,4 +7,8 @@ const collections = [
         name: "Mini Mountain",
         items: ["Stone", "Andesite", "Granite", "Obsidian", "Bedrock"],
     },
+    {
+        name: "Movie Night",
+        items: ["Theater Seat", "Cheeseburger", "Vending Machine"],
+    },
 ];
